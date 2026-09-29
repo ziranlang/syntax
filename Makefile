@@ -18,7 +18,7 @@ test:
 	$(BUILD)/syntax-test
 	$(ZIRAN) bundle --project --entry syntax_test:main \
 		-o $(BUILD)/syntax-test.zib tests/syntax_test.zi
-	test "$$($(ZIRAN) run $(BUILD)/syntax-test.zib)" = 0
+	test "$$($(ZIRAN) run --project $(BUILD)/syntax-test.zib)" = 0
 
 clean:
 	rm -rf $(BUILD)
