@@ -1,0 +1,15 @@
+{
+  "format": 1,
+  "packages": [
+
+  ],
+  "root": {
+    "dependencies": {},
+    "name": "Syntax"
+  },
+  "toolchain": {
+    "commit": "363b2ec5461aa1ec457176b2acf77fc9b92f2175",
+    "ref": "master",
+    "url": "https://github.com/ziranlang/ziran.git"
+  }
+}

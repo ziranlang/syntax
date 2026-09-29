@@ -1,0 +1,71 @@
+#import "syntax"
+
+using SyntaxMode;
+using SyntaxTokenKind;
+
+// Token kinds for each language, block comments across lines, and caller
+// owned span output that reports when it runs out of room.
+#program_export
+main :: () -> s32 {
+    directive: SyntaxToken = SyntaxTokenAt("#import \"app\"", 0, 13,
+        cast(SyntaxMode)SyntaxZiran, true, false)
+    comment: SyntaxToken = SyntaxTokenAt("# note", 0, 6,
+        cast(SyntaxMode)SyntaxZiran, true, false)
+    keyword: SyntaxToken = SyntaxTokenAt("return 42", 0, 9,
+        cast(SyntaxMode)SyntaxZiran, true, false)
+    number: SyntaxToken = SyntaxTokenAt("return 42", 7, 9,
+        cast(SyntaxMode)SyntaxZiran, false, false)
+    open: SyntaxToken = SyntaxTokenAt("/* open", 0, 7,
+        cast(SyntaxMode)SyntaxC, true, false)
+    close: SyntaxToken = SyntaxTokenAt("close */x", 0, 9,
+        cast(SyntaxMode)SyntaxC, false, true)
+    make: SyntaxToken = SyntaxTokenAt("$(CC) file", 0, 10,
+        cast(SyntaxMode)SyntaxMake, true, false)
+    if directive.length != 7 ||
+        directive.kind != cast(SyntaxTokenKind)SyntaxKeyword ||
+        comment.kind != cast(SyntaxTokenKind)SyntaxComment ||
+        keyword.kind != cast(SyntaxTokenKind)SyntaxKeyword ||
+        number.kind != cast(SyntaxTokenKind)SyntaxNumber ||
+        !open.block_comment || close.block_comment ||
+        close.length != 8 ||
+        make.kind != cast(SyntaxTokenKind)SyntaxPath ||
+        make.length != 5 { return 1 }
+    if !SyntaxDarkBackground(cast(u32)0x101820ff) ||
+        SyntaxDarkBackground(cast(u32)0xffffffff) ||
+        SyntaxColorFor(cast(SyntaxTokenKind)SyntaxKeyword,
+            false, cast(u32)0) != cast(u32)0x2448acff { return 2 }
+    short: [1]SyntaxColorSpan
+    limited: SyntaxSpansResult = SyntaxColorSpans("return 42",
+        cast(SyntaxMode)SyntaxZiran, cast(u32)0xffffffff,
+        cast(u32)0x172b4dff, short[:])
+    if limited.complete || limited.count != 1 ||
+        short[0].start != 0 || short[0].end != 6 ||
+        short[0].color != cast(u32)0x2448acff { return 3 }
+    full: [8]SyntaxColorSpan
+    painted: SyntaxSpansResult = SyntaxColorSpans("return 42",
+        cast(SyntaxMode)SyntaxZiran, cast(u32)0xffffffff,
+        cast(u32)0x172b4dff, full[:])
+    if !painted.complete || painted.count != 3 ||
+        full[2].start != 7 || full[2].end != 9 ||
+        full[2].color != cast(u32)0x96487eff { return 4 }
+    // A directive and a statement on two lines; the newline gets no span.
+    lines: [8]SyntaxColorSpan
+    two: SyntaxSpansResult = SyntaxColorSpans("#import \"app\"\nreturn 42",
+        cast(SyntaxMode)SyntaxZiran, cast(u32)0xffffffff,
+        cast(u32)0x172b4dff, lines[:])
+    if !two.complete || two.count != 6 ||
+        lines[0].end != 7 || lines[0].color != cast(u32)0x2448acff ||
+        lines[1].start != 7 || lines[1].end != 8 ||
+        lines[1].color != cast(u32)0x172b4dff ||
+        lines[2].start != 8 || lines[2].end != 13 ||
+        lines[2].color != cast(u32)0x227e52ff ||
+        lines[3].start != 14 || lines[3].end != 20 ||
+        lines[4].start != 20 || lines[4].end != 21 ||
+        lines[5].start != 21 || lines[5].end != 23 ||
+        lines[5].color != cast(u32)0x96487eff { return 6 }
+    none: SyntaxSpansResult = SyntaxColorSpans("return 42",
+        cast(SyntaxMode)SyntaxNone, cast(u32)0xffffffff,
+        cast(u32)0x172b4dff, full[:])
+    if !none.complete || none.count != 0 { return 5 }
+    return 0
+}
