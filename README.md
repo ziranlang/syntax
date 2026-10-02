@@ -33,10 +33,10 @@ TextArea props.
 
 `make check` checks the package and runs its tests as C and as a portable
 bundle. It uses the `ziran` launcher and the compiler pinned in `ziran.lock`.
-Put a Ziran checkout next to this one, or copy `ziran.local.toml` from the
-example below, to test against a local compiler:
+To test against the local compiler at `ziranlang/ziran`, put this in an
+ignored `ziran.local.toml`:
 
 ```toml
 [overrides]
-ziran = "../ziran"
+ziran = "../../ziran"
 ```
