@@ -8,7 +8,7 @@
     "name": "Syntax"
   },
   "toolchain": {
-    "commit": "363b2ec5461aa1ec457176b2acf77fc9b92f2175",
+    "commit": "7bc57800eb5fc0d922628bdbce2f619427fb4219",
     "ref": "master",
     "url": "https://github.com/ziranlang/ziran.git"
   }
