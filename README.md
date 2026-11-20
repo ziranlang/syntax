@@ -1,6 +1,6 @@
 # Syntax
 
-Syntax is a small [Ziran](https://github.com/ziranlang/ziran) package that
+Syntax is a small [Ziran](https://git.waozi.xyz/ziranlang/ziran) package that
 tokenizes Ziran, C, and Make source. It reports each token's byte range and
 kind (keyword, string, number, path, comment, whitespace, or plain text) and
 can color the tokens for a light or dark background. It allocates nothing:
@@ -9,7 +9,7 @@ callers pass the text and own the output spans.
 ## Use it
 
 ```sh
-ziran add https://github.com/ziranlang/syntax.git
+ziran add https://git.waozi.xyz/ziranlang/syntax.git
 ```
 
 ```zi

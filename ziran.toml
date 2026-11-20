@@ -3,8 +3,8 @@ name = "Syntax"
 module_roots = ["src", "tests"]
 
 [toolchain]
-git = "https://github.com/ziranlang/ziran.git"
-ref = "master"
+git = "https://git.waozi.xyz/ziranlang/ziran.git"
+ref = "7bc57800eb5fc0d922628bdbce2f619427fb4219"
 
 [exports]
 Syntax = "src/syntax.zi"
