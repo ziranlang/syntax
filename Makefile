@@ -17,8 +17,8 @@ test:
 		-I$(BUILD)/test-c $(BUILD)/test-c/*.c -o $(BUILD)/syntax-test
 	$(BUILD)/syntax-test
 	$(ZIRAN) bundle --project --entry syntax_test:main \
-		-o $(BUILD)/syntax-test.zib tests/syntax_test.zi
-	test "$$($(ZIRAN) run --project $(BUILD)/syntax-test.zib)" = 0
+		-o $(BUILD)/syntax-test.zx tests/syntax_test.zi
+	test "$$($(ZIRAN) run --project $(BUILD)/syntax-test.zx)" = 0
 
 clean:
 	rm -rf $(BUILD)
